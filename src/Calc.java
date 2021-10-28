@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 public class Calc {
 
     public static void main(String[] args) throws IOException {
+
+
         BufferedReader bi = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             try {
@@ -36,22 +38,16 @@ public class Calc {
                         int operand2 = rn.getArabianNumerals(charOperand2);
                         result = mo.result(operand1, operand2, operationSign);
                         if (result <= 0) {
-                            throw new ArithmeticException("В римской системе нет отрицательных чисел");
+                            throw new ArithmeticException("В римской системе нет отрицательных чисел и цыфры ноль");
                         }
                         String f = rn.getRomanResult(result);
                         System.out.println(f);
                     }
                 } else {
-                    String[] testStr = inputStr.split("[+,\\-,/,*]");
-                    if ((rn.isRoman(splitStr[0]) && rn.isArabian(splitStr[1]))
-                            || (rn.isArabian(splitStr[0]) && rn.isRoman(splitStr[1])))
-                    {
-                        throw new ArithmeticException("Используются одновременно разные системы счисления");
+                    TestExeption testExeption = new TestExeption(inputStr);
+                    String str = testExeption.testExp();
 
-                    }
-                    if (testStr.length > 2)
-                    {throw new ArithmeticException("Формат математической операции не удовлетворяет заданию - два" +
-                            " операнда и один оператор (+, -, /, *)");}
+                   throw new ArithmeticException(testExeption.testExp());
                 }
 
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -60,11 +56,10 @@ public class Calc {
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 break;
-            } finally {
-                bi.close();
             }
 
         }
+        bi.close();
 
     }
 
