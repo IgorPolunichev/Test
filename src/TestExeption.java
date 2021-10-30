@@ -14,7 +14,7 @@ public class TestExeption extends Exception {
         {
             throwable = "Строка не является математической операцией";
         }
-        else if (splitStr.length > 3)
+        else if (splitStr.length >= 3)
         {
             throwable = "Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)";
         }

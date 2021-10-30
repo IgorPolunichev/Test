@@ -92,7 +92,7 @@ public class RomanNumerals {
     }
     public boolean isArabian(String str) {
         boolean result = false;
-        Pattern pattern = Pattern.compile("^[0-9]{1,2}");
+        Pattern pattern = Pattern.compile("^[0-9]{1,2}$");
         Matcher matcher = pattern.matcher(str);
         if (matcher.find()) {
             result = true;
