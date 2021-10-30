@@ -43,7 +43,12 @@ public class RomanNumerals {
             if (result < 50)
             {d.add(romanNumerals.get(10));
             result = result + 10 - 50;
-            d.add(romanNumerals.get(result));}
+            if (result == 0)
+            {d.add(romanNumerals.get(50));}
+            else {
+                d.add(romanNumerals.get(result));
+            }
+            }
             else if (result > 49)
             {d.add(romanNumerals.get(50));
             result = result - 50;
@@ -98,10 +103,22 @@ public class RomanNumerals {
     public boolean isRoman (String str)
     {
         boolean result = false;
-
-        if (romanNumerals.containsValue(str)) {
-            result = true;
+        String[] splitStr = str.split("");
+        for (String s : splitStr) {
+            result = romanNumerals.containsValue(s);
+            if (!result)
+            {break;}
         }
         return result;
+    }
+    public int romanNumeralsAfterTen (String s)
+    {
+        int numeral = 11;
+        String[] operand = s.split("");
+        for (String str : operand)
+        {numeral += getArabianNumerals(str);}
+        return numeral;
+
+
     }
 }

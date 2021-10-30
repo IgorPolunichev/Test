@@ -45,10 +45,7 @@ public class Calc {
             }
 
         }
-        catch (TestExeption e)
-        {
-            System.out.println(e.getMessage());
-        }
+
         catch(Exception e){
             System.out.println(e.getMessage());
         }
