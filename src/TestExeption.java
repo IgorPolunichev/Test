@@ -1,39 +1,77 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TestExeption {
+public class TestExeption extends Exception {
     private String string;
+     String throwable = null;
 
     TestExeption(String str) {
         this.string = str;
     }
 
     public String testExp() {
-        Pattern pattern = Pattern.compile("[a-zA-Z].+");
-        Matcher matcher = pattern.matcher(string);
-        String[] splitStr = string.split("[ +,\\-,/,*,]");
-        String throwable = null;
         RomanNumerals romanNumerals = new RomanNumerals();
-        if (matcher.find())
-        {
-            throwable = "Вы ввели буквы а не цифры";
-        }
-        else if (splitStr.length > 2)
-        {
-            throwable = "Формат математической операции не удовлетворяет заданию - два" +
-                    " операнда и один оператор (+, -, /, *)";
-        }
-        else if ((romanNumerals.isRoman(splitStr[0]) && romanNumerals.isArabian(splitStr[1]))
-                    || (romanNumerals.isArabian(splitStr[0]) && romanNumerals.isRoman(splitStr[1])))
-            {
-                throwable = "Используются одновременно разные системы счисления";
 
-            }
-        else if (Integer.parseInt(splitStr[0]) > 10 && Integer.parseInt(splitStr[1]) > 10)
+        String[] splitStr = string.split("[ +,\\-,/,*,]");
+        if (splitStr.length == 1)
         {
-            throwable = "Калькулятор работает только с числами от 0 до 10";
+            throwable = "Строка не является математической операцией";
         }
+        else if (splitStr.length > 3)
+        {
+            throwable = "Формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)";
+        }
+        else if (splitStr.length == 2)
+        {
+            if ((romanNumerals.isRoman(splitStr[0]) && romanNumerals.isArabian(splitStr[1]))
+                || (romanNumerals.isArabian(splitStr[0]) && romanNumerals.isRoman(splitStr[1])))
+        {
+            throwable = "Используются одновременно разные системы счисления";
+        }
+            else if (romanNumerals.isArabian(splitStr[0]) && romanNumerals.isArabian(splitStr[1]))
+        {
+            if (Integer.parseInt(splitStr[0]) > 10 || Integer.parseInt(splitStr[1]) > 10)
+        {
+            throwable = "На вход принимаются числа от 1 до 10";}
+        }
+            else  if ((romanNumerals.isRoman(splitStr[0]) && !romanNumerals.isRoman(splitStr[1]))
+                    || (!romanNumerals.isRoman(splitStr[1]) && romanNumerals.isRoman(splitStr[0])) )
+            {throwable = "Строка не является математической операцией";}
+            else if (((romanNumerals.isArabian(splitStr[0]) && !romanNumerals.isArabian(splitStr[1]))
+                    || (!romanNumerals.isArabian(splitStr[1]) && romanNumerals.isArabian(splitStr[0]))))
+            {throwable = "Строка не является математической операцией";}
+        }
+
+
+
+
+
+
+
         return throwable;
+    }
+}
+//        RomanNumerals romanNumerals = new RomanNumerals();
+//        if (matcher.find())
+//        {
+//            throwable = "Вы ввели буквы а не цифры";
+//        }
+//        else if (splitStr.length > 2)
+//        {
+//            throwable = "Формат математической операции не удовлетворяет заданию - два" +
+//                    " операнда и один оператор (+, -, /, *)";
+//        }
+//        else if ((romanNumerals.isRoman(splitStr[0]) && romanNumerals.isArabian(splitStr[1]))
+//                    || (romanNumerals.isArabian(splitStr[0]) && romanNumerals.isRoman(splitStr[1])))
+//            {
+//                throwable = "Используются одновременно разные системы счисления";
+//
+//            }
+//        else if (Integer.parseInt(splitStr[0]) > 10 && Integer.parseInt(splitStr[1]) > 10)
+//        {
+//            throwable = "Калькулятор работает только с числами от 0 до 10";
+//        }
+//        return throwable;
 
 //        { +,\-,/,*,
 //            String[] testStr = inputStr.split("");
@@ -47,5 +85,4 @@ public class TestExeption {
 //            {throw new ArithmeticException("Формат математической операции не удовлетворяет заданию - два" +
 //                    " операнда и один оператор (+, -, /, *)");}}
 
-    }
-}
+

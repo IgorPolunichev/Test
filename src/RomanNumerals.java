@@ -1,26 +1,26 @@
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class RomanNumerals {
-    private static final Map<Integer, Character> romanNumerals = new HashMap<>();
+    private static final Map<Integer, String> romanNumerals = new HashMap<>();
     private static final Set<Integer> value = romanNumerals.keySet();
 
 
     public RomanNumerals() {
-        romanNumerals.put(1, '\u2160');
-        romanNumerals.put(2, '\u2161');
-        romanNumerals.put(3, '\u2162');
-        romanNumerals.put(4, '\u2163');
-        romanNumerals.put(5, '\u2164');
-        romanNumerals.put(6, '\u2165');
-        romanNumerals.put(7, '\u2166');
-        romanNumerals.put(8, '\u2167');
-        romanNumerals.put(9, '\u2168');
-        romanNumerals.put(10, '\u2169');
-        romanNumerals.put(50, '\u216c');
-        romanNumerals.put(100, '\u216d');
+        romanNumerals.put(1, "I");
+        romanNumerals.put(2, "II");
+        romanNumerals.put(3, "III");
+        romanNumerals.put(4, "IV");
+        romanNumerals.put(5, "V");
+        romanNumerals.put(6, "VI");
+        romanNumerals.put(7, "VII");
+        romanNumerals.put(8, "VIII");
+        romanNumerals.put(9, "IX");
+        romanNumerals.put(10, "X");
+        romanNumerals.put(50, "L");
+        romanNumerals.put(100, "C");
+
 
     }
 
@@ -28,8 +28,7 @@ public class RomanNumerals {
         ArrayList<Integer> integers = new ArrayList<>(value);
         Collections.sort(integers);
         String romanResult = "";
-        ArrayList<Character> d = new ArrayList<>();
-
+        ArrayList<String> d = new ArrayList<>();
         if (result >= 1 && result <= 10)
         {d.add(romanNumerals.get(result));}
         else if (result > 10 && result < 40)
@@ -58,17 +57,28 @@ public class RomanNumerals {
         else  if (result > 89 && result < 101)
         {d.add(romanNumerals.get(100));
         result = 100 - result;
+        if (result > 0 && result <= 10)
+        {
+
+            d.add(0 ,romanNumerals.get(10));
+
+            result = result - 10;
         if (result > 0)
-        d.add(romanNumerals.get(result));}
-        for (Character character : d) {
-            romanResult = romanResult + character.toString();
+        {
+            d.add(romanNumerals.get(result));
+        }
+        }
+        }
+        for (String character : d) {
+            romanResult = romanResult + character;
         }
         return romanResult;
+
     }
-    public Integer getArabianNumerals(Character character) {
+    public Integer getArabianNumerals(String operand) {
         int result = 0;
         for (Integer i : value) {
-            if (character.equals(romanNumerals.get(i))) {
+            if (operand.equals(romanNumerals.get(i))) {
                 result = i;
                 break;
             }
@@ -88,9 +98,8 @@ public class RomanNumerals {
     public boolean isRoman (String str)
     {
         boolean result = false;
-        Pattern pattern = Pattern.compile("^[Ⅰ,Ⅱ,Ⅲ,Ⅳ,Ⅴ,Ⅵ,Ⅶ,Ⅷ,Ⅸ,Ⅹ]");
-        Matcher matcher = pattern.matcher(str);
-        if (matcher.find()) {
+
+        if (romanNumerals.containsValue(str)) {
             result = true;
         }
         return result;
